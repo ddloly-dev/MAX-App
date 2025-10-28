@@ -13,9 +13,9 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install Buildozer
+    - name: Install dependencies
       run: |
-        pip install buildozer
+        pip install buildozer cython
 
     - name: Build APK
       run: |
