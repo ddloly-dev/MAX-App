@@ -13,14 +13,22 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install dependencies
+    # УСТАНАВЛИВАЕМ CYTHON ОТДЕЛЬНО (ОБЯЗАТЕЛЬНО!)
+    - name: Install Cython
       run: |
-        pip install buildozer cython
+        pip install "cython<3.0"
 
+    # УСТАНАВЛИВАЕМ BUIldozer
+    - name: Install Buildozer
+      run: |
+        pip install buildozer
+
+    # СБОРКА APK
     - name: Build APK
       run: |
         buildozer -v android debug
 
+    # ЗАГРУЗКА APK
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
