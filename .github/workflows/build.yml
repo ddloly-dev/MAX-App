@@ -1,21 +1,31 @@
-name: Build APK
+name: Build Android APK
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Buildozer global directory
+        uses: actions/cache@v4
+        with:
+          path: ~/.buildozer_global
+          key: ${{ runner.os }}-buildozer-global-${{ hashFiles('buildozer.spec') }}
 
       - name: Build with Buildozer
-        uses: kivy/buildozer-action@v1.0.0
+        id: buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          buildozer_version: 1.5.0
-          command: android debug
+          command: buildozer android debug
+          buildozer_version: stable  # Or specify a version like '1.5.0'
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MAX.apk
-          path: bin/*.apk
+          name: apk
+          path: ${{ steps.buildozer.outputs.filename }}
