@@ -1,18 +1,16 @@
 [app]
 title = MAX
-package.name = maxapp
+package.name = max
 package.domain = com.max.app
 
 source.dir = .
-source.include_exts = py,png,jpg,kv,atlas,dummy.bin
+source.include_exts = py,dummy.bin
 
 version = 1.0
-requirements = python3,kivy
+requirements = python3,kivy==2.3.0
 
 [buildozer]
 log_level = 2
-
-android.permissions =
 
 android.api = 35
 android.minapi = 21
